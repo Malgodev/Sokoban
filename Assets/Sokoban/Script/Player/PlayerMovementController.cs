@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    private float movementDelay = 1f;
     [SerializeField] private float moveTime = 2f;
 
     private bool IsMoving = false;
@@ -17,12 +16,27 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-        Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        float horAxis = Input.GetAxisRaw("Horizontal");
+        float verAxis = Input.GetAxisRaw("Vertical");
 
-        if (inputVector != Vector2.zero && IsMoveable())
+        Vector3 targetPos = GetTargetPos(horAxis, verAxis);
+
+        if (targetPos != Vector3.zero && IsMoveable())
         {
-            StartCoroutine(MoveToPosition(new Vector3(1, 0, 0)));
+            StartCoroutine(MoveToPosition(transform.position + targetPos));
         }
+    }
+
+    private Vector3 GetTargetPos(float horAxis, float verAxis)
+    {
+        Vector3 targetVector = new Vector3(horAxis, verAxis, 0);
+
+        if (horAxis != 0)
+        {
+            targetVector.y = 0;
+        }
+
+        return targetVector;
     }
 
     private IEnumerator MoveToPosition(Vector3 targetPos)
@@ -50,6 +64,13 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool IsMoveable()
     {
+        if (IsMoving)
+        {
+            return false;
+        }
+
+
+
         return true;
     }
 }
