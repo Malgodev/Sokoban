@@ -1,4 +1,4 @@
-using System.Numerics;
+using UnityEngine;
 
 [System.Serializable]
 public class MapObject
@@ -20,5 +20,10 @@ public class Position
     public override string ToString()
     {
         return x + ":" + y;
+    }
+
+    public Vector3 GetVector()
+    {
+        return new Vector3(x, y, 0); 
     }
 }
