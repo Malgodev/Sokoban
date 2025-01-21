@@ -10,6 +10,9 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Prefab")]
     [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private GameObject boxPrefab;
+    [SerializeField] private GameObject targetBoxPrefab;
+
 
     private void Start()
     {
@@ -41,11 +44,21 @@ public class MapGenerator : MonoBehaviour
         }
 
         // Generate box
+        GeneratePrefabAtPosition(mapObject.BoxPosition, boxPrefab);
 
         // Generate target box position
+        GeneratePrefabAtPosition(mapObject.TargetPosition, targetBoxPrefab);
 
         // Setplayer position
         GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
+    }
+
+    public void GeneratePrefabAtPosition(Position[] position, GameObject prefab)
+    {
+        foreach (Position pos in position)
+        {
+            GameObject curBox = Instantiate(prefab, pos.Vector, Quaternion.identity);
+        }
     }
 
     public void GenerateWall(Position[] turnPoint)
