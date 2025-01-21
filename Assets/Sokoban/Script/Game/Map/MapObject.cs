@@ -29,6 +29,14 @@ public class Position
     public int x;
     public int y;
 
+    public Vector2 Vector
+    {
+        get
+        {
+            return new Vector2(x, y);
+        }
+    }
+
     public override string ToString()
     {
         return x + ":" + y;

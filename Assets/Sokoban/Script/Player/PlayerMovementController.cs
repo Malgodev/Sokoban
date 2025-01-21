@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    private Vector2 defaultLocation;
+
     [SerializeField] private float moveTime = 2f;
 
     private bool IsMoving = false;
@@ -72,5 +74,12 @@ public class PlayerMovementController : MonoBehaviour
 
 
         return true;
+    }
+
+    public void SetDefaultPosition(Vector2 position)
+    {
+        defaultLocation = position;
+
+        this.transform.position = defaultLocation;
     }
 }

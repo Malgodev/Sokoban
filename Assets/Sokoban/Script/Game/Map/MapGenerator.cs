@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class MapGenerator : MonoBehaviour
 {
+    [SerializeField] private Transform enviroment;
+
     [Header("Prefab")]
     [SerializeField] private GameObject wallPrefab;
 
@@ -33,11 +35,17 @@ public class MapGenerator : MonoBehaviour
         GenerateWall(GetVectorListFromPoints(mapObject.OuterWallTurnPoint).ToList());
 
         // Generate inner wall
-
         for (int i = 0; i < mapObject.InnerWallTurnPoint.Length; i++)
         {
             GenerateWall(mapObject.InnerWallTurnPoint[i].Points);
         }
+
+        // Generate box
+
+        // Generate target box position
+
+        // Setplayer position
+        GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
     }
 
     public void GenerateWall(Position[] turnPoint)
@@ -57,12 +65,12 @@ public class MapGenerator : MonoBehaviour
 
             if (wallLine.Length == 0)
             {
-                GameObject curWall = Instantiate(wallPrefab, wallPoints[i], Quaternion.identity);
+                GameObject curWall = Instantiate(wallPrefab, wallPoints[i], Quaternion.identity, enviroment);
             }
 
             foreach (Vector2 wallPoint in wallLine)
             {
-                GameObject curWall = Instantiate(wallPrefab, wallPoint, Quaternion.identity);
+                GameObject curWall = Instantiate(wallPrefab, wallPoint, Quaternion.identity, enviroment);
             }
         }
     }
