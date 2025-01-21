@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -5,10 +6,21 @@ public class MapObject
 {
     public string MapId;
     public Position[] OuterWallTurnPoint;
-    public Position[][] InnerWallTurnPoint;
+    public TurnPoint[] InnerWallTurnPoint;
     public Position[] BoxPosition;
     public Position[] TargetPosition;
     public Position PlayerPosition;
+}
+
+[System.Serializable]
+public class TurnPoint
+{
+    public Position[] Points;
+
+    public override string ToString()
+    {
+        return Points.Length.ToString();
+    }
 }
 
 [System.Serializable]

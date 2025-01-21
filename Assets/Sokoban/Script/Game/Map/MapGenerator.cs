@@ -22,7 +22,6 @@ public class MapGenerator : MonoBehaviour
         {
             MapObject mapObject = JsonUtility.FromJson<MapObject>(jsonFile.text);
 
-
             GenerateMap(mapObject);
         }
 
@@ -30,8 +29,22 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap(MapObject mapObject)
     {
+        // Generate outer wall
+        GenerateWall(GetVectorListFromPoints(mapObject.OuterWallTurnPoint).ToList());
 
-        GenerateWall(mapObject.OuterWallTurnPoint.Select(pos => new Vector2(pos.x, pos.y)).ToList());
+        // Generate inner wall
+
+        for (int i = 0; i < mapObject.InnerWallTurnPoint.Length; i++)
+        {
+            GenerateWall(mapObject.InnerWallTurnPoint[i].Points);
+        }
+    }
+
+    public void GenerateWall(Position[] turnPoint)
+    {
+        List<Vector2> wallPoints = GetVectorListFromPoints(turnPoint).ToList();
+
+        GenerateWall(wallPoints);
     }
 
     public void GenerateWall(List<Vector2> wallPoints)
@@ -41,6 +54,11 @@ public class MapGenerator : MonoBehaviour
         for (int i = 1; i < wallPoints.Count; i++)
         {
             Vector2[] wallLine = GetLineBetweenPoints(wallPoints[i - 1], wallPoints[i]);
+
+            if (wallLine.Length == 0)
+            {
+                GameObject curWall = Instantiate(wallPrefab, wallPoints[i], Quaternion.identity);
+            }
 
             foreach (Vector2 wallPoint in wallLine)
             {
@@ -69,5 +87,10 @@ public class MapGenerator : MonoBehaviour
         }
 
         return result.ToArray();
+    }
+
+    public static Vector2[] GetVectorListFromPoints(Position[] points)
+    {
+        return points.Select(pos => new Vector2(pos.x, pos.y)).ToArray();
     }
 }
