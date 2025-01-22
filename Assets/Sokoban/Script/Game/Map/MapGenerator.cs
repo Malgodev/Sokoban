@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,14 +35,20 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap(MapObject mapObject)
     {
+        int maxX = 0;
+        int maxY = 0;
+
         // Generate outer wall
-        GenerateWall(GetVectorListFromPoints(mapObject.OuterWallTurnPoint).ToList());
+        GenerateWall(GetVectorListFromPoints(mapObject.OuterWallTurnPoint).ToList(), out maxX, out maxY);
 
         // Generate inner wall
         for (int i = 0; i < mapObject.InnerWallTurnPoint.Length; i++)
         {
             GenerateWall(mapObject.InnerWallTurnPoint[i].Points);
         }
+
+        // Generate floor
+        GenerateFloor(maxX, maxY);
 
         // Generate box
         GeneratePrefabAtPosition(mapObject.BoxPosition, boxPrefab);
@@ -52,6 +59,26 @@ public class MapGenerator : MonoBehaviour
         // Setplayer position
         GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
     }
+
+    private void GenerateFloor(int maxX, int maxY)
+    {
+        for (int i = 0; i <= maxX; i++)
+        {
+            bool isLeftWall = false;
+
+            for (int j = 0; j <= maxY; j++)
+            {
+                // TODO Hard code
+                Collider2D wall = Utility.OverlapPoint(new Vector2(i, j), "Wall");
+
+                if (wall != null)
+                {
+                    Debug.Log(i + " " + j);
+                }
+            }
+        }
+    }
+
 
     public void GeneratePrefabAtPosition(Position[] position, GameObject prefab)
     {
@@ -74,6 +101,32 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 1; i < wallPoints.Count; i++)
         {
+            Vector2[] wallLine = GetLineBetweenPoints(wallPoints[i - 1], wallPoints[i]);
+
+            if (wallLine.Length == 0)
+            {
+                GameObject curWall = Instantiate(wallPrefab, wallPoints[i], Quaternion.identity, enviroment);
+            }
+
+            foreach (Vector2 wallPoint in wallLine)
+            {
+                GameObject curWall = Instantiate(wallPrefab, wallPoint, Quaternion.identity, enviroment);
+            }
+        }
+    }
+
+    public void GenerateWall(List<Vector2> wallPoints, out int maxX, out int maxY)
+    {
+        maxX = 0;
+        maxY = 0;
+
+        wallPoints.Add(wallPoints[0]);
+
+        for (int i = 1; i < wallPoints.Count; i++)
+        {
+            maxX = Mathf.Max(maxX, (int) wallPoints[i].x, (int) wallPoints[i - 1].x);
+            maxY = Mathf.Max(maxY, (int) wallPoints[i].y, (int) wallPoints[i - 1].y);
+
             Vector2[] wallLine = GetLineBetweenPoints(wallPoints[i - 1], wallPoints[i]);
 
             if (wallLine.Length == 0)

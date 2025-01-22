@@ -71,8 +71,6 @@ public class PlayerMovementController : MonoBehaviour
             return false;
         }
 
-
-
         return true;
     }
 
