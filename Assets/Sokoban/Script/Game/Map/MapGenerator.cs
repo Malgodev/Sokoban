@@ -11,6 +11,7 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Prefab")]
     [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private GameObject floorPrefab;
     [SerializeField] private GameObject boxPrefab;
     [SerializeField] private GameObject targetBoxPrefab;
 
@@ -62,23 +63,89 @@ public class MapGenerator : MonoBehaviour
 
     private void GenerateFloor(int maxX, int maxY)
     {
-        for (int i = 0; i <= maxX; i++)
+        for (int y = 0; y <= maxY; y++)
         {
-            bool isLeftWall = false;
+            int leftWallIndex = 0;
+            int rightWallIndex = maxX;
 
-            for (int j = 0; j <= maxY; j++)
+            bool hasLeftWall = false;
+            bool hasRightWall = false;
+
+            while (leftWallIndex <= rightWallIndex)
             {
-                // TODO Hard code
-                Collider2D wall = Utility.OverlapPoint(new Vector2(i, j), "Wall");
+                hasLeftWall = HasWall(new Vector2(leftWallIndex, y));
+                hasRightWall = HasWall(new Vector2(rightWallIndex, y));
 
-                if (wall != null)
+                if (hasLeftWall && hasRightWall)
                 {
-                    Debug.Log(i + " " + j);
+                    break;
+                }
+
+                leftWallIndex++;
+                rightWallIndex--;
+            }
+
+            Debug.Log(hasLeftWall + " " +  hasRightWall);
+            Debug.Log(leftWallIndex + " " + rightWallIndex + " " + y);
+
+            if (!(hasLeftWall && hasRightWall))
+            {
+                continue;
+            }
+
+            for (int x = leftWallIndex; x <= rightWallIndex; x++)
+            {
+                Vector2 targetPoint = new Vector2(x, y);
+                if (!HasWall(targetPoint))
+                {
+                    GameObject curFloor = Instantiate(floorPrefab, targetPoint, Quaternion.identity);
                 }
             }
+
+            //bool hasLeftWall = false;
+
+            //for (int j = 0; j <= maxY; j++)
+            //{
+            //    if (CanSpawnFloor(new Vector2(i, j), ref hasLeftWall))
+            //    {
+            //        GameObject curFloor = Instantiate(floorPrefab, new Vector3(i, j, 0), Quaternion.identity);
+            //    }
+            //}
         }
     }
 
+    private bool HasWall(Vector2 point)
+    {
+        // TODO Hard code
+        Collider2D wall = Utility.OverlapPoint(point, "Wall");
+
+        return wall != null;
+    }
+
+    private bool CanSpawnFloor(Vector2 point, ref bool hasLeftWall)
+    {
+        // TODO Hard code
+        Collider2D wall = Utility.OverlapPoint(point, "Wall");
+
+        if (wall != null)
+        {
+            bool result = false;
+            if (!hasLeftWall)
+            {
+                return false;
+            }
+
+            hasLeftWall = true;
+            return false;
+        }
+
+        if (hasLeftWall == true)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public void GeneratePrefabAtPosition(Position[] position, GameObject prefab)
     {
