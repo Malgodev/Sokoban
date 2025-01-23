@@ -25,6 +25,8 @@ public class PlayerMovementController : MonoBehaviour
 
         if (targetDirec != Vector3.zero && IsMoveable(targetDirec + transform.position))
         {
+
+
             StartCoroutine(MoveToPosition(transform.position + targetDirec));
         }
     }
@@ -72,7 +74,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         // TODO Hard code
-        if (Utility.OverlapPoint(targetPos, "Wall") != null)
+        if (Utility.OverlapPoint(targetPos, "Wall"))
+        {
+            return false;
+        }
+
+        Vector2 targetDirec = targetPos - (Vector2) transform.position;
+
+        if (Utility.OverlapPoint(targetPos, "Box") && Physics2D.OverlapPoint(targetPos + targetDirec) != null)
         {
             return false;
         }
