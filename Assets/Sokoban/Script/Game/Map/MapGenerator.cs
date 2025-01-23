@@ -85,9 +85,6 @@ public class MapGenerator : MonoBehaviour
                 rightWallIndex--;
             }
 
-            Debug.Log(hasLeftWall + " " +  hasRightWall);
-            Debug.Log(leftWallIndex + " " + rightWallIndex + " " + y);
-
             if (!(hasLeftWall && hasRightWall))
             {
                 continue;
@@ -98,19 +95,9 @@ public class MapGenerator : MonoBehaviour
                 Vector2 targetPoint = new Vector2(x, y);
                 if (!HasWall(targetPoint))
                 {
-                    GameObject curFloor = Instantiate(floorPrefab, targetPoint, Quaternion.identity);
+                    GameObject curFloor = Instantiate(floorPrefab, targetPoint, Quaternion.identity, enviroment);
                 }
             }
-
-            //bool hasLeftWall = false;
-
-            //for (int j = 0; j <= maxY; j++)
-            //{
-            //    if (CanSpawnFloor(new Vector2(i, j), ref hasLeftWall))
-            //    {
-            //        GameObject curFloor = Instantiate(floorPrefab, new Vector3(i, j, 0), Quaternion.identity);
-            //    }
-            //}
         }
     }
 
@@ -122,36 +109,11 @@ public class MapGenerator : MonoBehaviour
         return wall != null;
     }
 
-    private bool CanSpawnFloor(Vector2 point, ref bool hasLeftWall)
-    {
-        // TODO Hard code
-        Collider2D wall = Utility.OverlapPoint(point, "Wall");
-
-        if (wall != null)
-        {
-            bool result = false;
-            if (!hasLeftWall)
-            {
-                return false;
-            }
-
-            hasLeftWall = true;
-            return false;
-        }
-
-        if (hasLeftWall == true)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     public void GeneratePrefabAtPosition(Position[] position, GameObject prefab)
     {
         foreach (Position pos in position)
         {
-            GameObject curBox = Instantiate(prefab, pos.Vector, Quaternion.identity);
+            GameObject curBox = Instantiate(prefab, pos.Vector, Quaternion.identity, enviroment);
         }
     }
 

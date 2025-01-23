@@ -21,11 +21,11 @@ public class PlayerMovementController : MonoBehaviour
         float horAxis = Input.GetAxisRaw("Horizontal");
         float verAxis = Input.GetAxisRaw("Vertical");
 
-        Vector3 targetPos = GetTargetPos(horAxis, verAxis);
+        Vector3 targetDirec = GetTargetPos(horAxis, verAxis);
 
-        if (targetPos != Vector3.zero && IsMoveable())
+        if (targetDirec != Vector3.zero && IsMoveable(targetDirec + transform.position))
         {
-            StartCoroutine(MoveToPosition(transform.position + targetPos));
+            StartCoroutine(MoveToPosition(transform.position + targetDirec));
         }
     }
 
@@ -64,9 +64,15 @@ public class PlayerMovementController : MonoBehaviour
         yield return null;
     }
 
-    private bool IsMoveable()
+    private bool IsMoveable(Vector2 targetPos)
     {
         if (IsMoving)
+        {
+            return false;
+        }
+
+        // TODO Hard code
+        if (Utility.OverlapPoint(targetPos, "Wall") != null)
         {
             return false;
         }
