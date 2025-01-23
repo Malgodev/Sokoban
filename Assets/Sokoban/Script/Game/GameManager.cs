@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PlayerMovementController PlayerMovementController;
 
+    public const float MOVE_TIME = 1f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

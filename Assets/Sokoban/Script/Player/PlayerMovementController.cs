@@ -7,8 +7,6 @@ public class PlayerMovementController : MonoBehaviour
 {
     private Vector2 defaultLocation;
 
-    [SerializeField] private float moveTime = 2f;
-
     private bool IsMoving = false;
 
     void Start()
@@ -51,9 +49,9 @@ public class PlayerMovementController : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        while (elapsedTime < moveTime)
+        while (elapsedTime < GameManager.MOVE_TIME)
         {
-            Vector3 interpolatedDir = Vector3.Slerp(startPosition, targetPos, elapsedTime / moveTime);
+            Vector3 interpolatedDir = Vector3.Slerp(startPosition, targetPos, elapsedTime / GameManager.MOVE_TIME);
             elapsedTime += Time.deltaTime;
             transform.position = interpolatedDir;
             yield return null;
