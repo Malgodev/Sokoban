@@ -17,7 +17,8 @@ public class BoxController : MonoBehaviour
 
         while (elapsedTime < GameManager.MOVE_TIME)
         {
-            Vector3 interpolatedDir = Vector3.Slerp(startPosition, targetPos, elapsedTime / GameManager.MOVE_TIME);
+            Vector3 interpolatedDir = Vector3.Lerp(startPosition, targetPos, elapsedTime / GameManager.MOVE_TIME);
+
             elapsedTime += Time.deltaTime;
             transform.position = interpolatedDir;
             yield return null;
