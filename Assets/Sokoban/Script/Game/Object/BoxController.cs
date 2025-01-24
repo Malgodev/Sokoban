@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
+    [SerializeField] private Sprite normalBox;
+    [SerializeField] private Sprite targetBox;
+
     public void MoveToTargetPosition(Vector2 targetPosition)
     {
         StartCoroutine(MoveToPosition(targetPosition));
@@ -27,5 +30,10 @@ public class BoxController : MonoBehaviour
         transform.position = targetPos;
 
         yield return null;
+    }
+
+    public void ChangeColor(bool isInTarget)
+    {
+        GetComponent<SpriteRenderer>().sprite = isInTarget ? targetBox : normalBox;
     }
 }

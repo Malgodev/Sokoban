@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PlayerMovementController PlayerMovementController;
 
+    public List<Vector2> TargetPosition { get; private set; }
+    public List<BoxController> BoxControllers { get; private set; }
+
     public const float MOVE_TIME = .5f;
 
     private void Awake()
@@ -29,10 +33,31 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        TargetPosition = new List<Vector2>();
     }
 
     public void SetPlayerDefaultPosition(Vector2 defaultPosition)
     {
         PlayerMovementController.SetDefaultPosition(defaultPosition);
+
+
+    }
+
+    public void SetTargetPosition(Vector2[] targetPosition)
+    {
+        TargetPosition = targetPosition.ToList();
+    }
+
+    public void CheckWinning()
+    {
+        foreach (Vector2 targetPos in TargetPosition)
+        {
+            Collider2D box = Utility.OverlapPoint(targetPos, "Box");
+            if (box)
+            {
+                box.GetComponent<BoxController>().ChangeColor(true);
+            }
+        }
     }
 }

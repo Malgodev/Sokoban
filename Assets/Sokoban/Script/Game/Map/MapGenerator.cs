@@ -40,7 +40,7 @@ public class MapGenerator : MonoBehaviour
         int maxY = 0;
 
         // Generate outer wall
-        GenerateWall(GetVectorListFromPoints(mapObject.OuterWallTurnPoint).ToList(), out maxX, out maxY);
+        GenerateWall(GetVectorArrayFromPoints(mapObject.OuterWallTurnPoint).ToList(), out maxX, out maxY);
 
         // Generate inner wall
         for (int i = 0; i < mapObject.InnerWallTurnPoint.Length; i++)
@@ -56,6 +56,7 @@ public class MapGenerator : MonoBehaviour
 
         // Generate target box position
         GeneratePrefabAtPosition(mapObject.TargetPosition, targetBoxPrefab);
+        GameManager.Instance.SetTargetPosition(GetVectorArrayFromPoints(mapObject.TargetPosition));
 
         // Setplayer position
         GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
@@ -119,7 +120,7 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateWall(Position[] turnPoint)
     {
-        List<Vector2> wallPoints = GetVectorListFromPoints(turnPoint).ToList();
+        List<Vector2> wallPoints = GetVectorArrayFromPoints(turnPoint).ToList();
 
         GenerateWall(wallPoints);
     }
@@ -192,7 +193,7 @@ public class MapGenerator : MonoBehaviour
         return result.ToArray();
     }
 
-    public static Vector2[] GetVectorListFromPoints(Position[] points)
+    public static Vector2[] GetVectorArrayFromPoints(Position[] points)
     {
         return points.Select(pos => new Vector2(pos.x, pos.y)).ToArray();
     }
