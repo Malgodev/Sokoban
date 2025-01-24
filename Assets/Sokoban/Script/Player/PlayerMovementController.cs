@@ -78,10 +78,18 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         Vector2 targetDirec = targetPos - (Vector2) transform.position;
+        Collider2D boxCollider = Utility.OverlapPoint(targetPos, "Box");
 
-        if (Utility.OverlapPoint(targetPos, "Box") && Physics2D.OverlapPoint(targetPos + targetDirec) != null)
+        if (boxCollider)
         {
-            return false;
+            if (Physics2D.OverlapPoint(targetPos + targetDirec) != null)
+            {
+                return false;
+            }
+
+            BoxController boxController = boxCollider.GetComponent<BoxController>();
+
+            boxController.MoveToTargetPosition(targetPos + targetDirec);
         }
 
         return true;
