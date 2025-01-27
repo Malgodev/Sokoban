@@ -143,3 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e88744cbc2378a46ad48b61f8c2c940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalBox: {fileID: 21300000, guid: 450d5c8787751d945bd9b7eb365e96c6, type: 3}
+  targetBox: {fileID: 21300000, guid: 0e23d0230ac6f2a40b7be3a750be145f, type: 3}

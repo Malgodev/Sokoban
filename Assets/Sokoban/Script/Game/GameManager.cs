@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 enum ObjectType
@@ -19,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerMovementController PlayerMovementController;
 
     public List<Vector2> TargetPosition { get; private set; }
-    public List<BoxController> BoxControllers { get; private set; }
+    public List<BoxController> BoxControllerList { get; private set; }
 
     public const float MOVE_TIME = .5f;
 
@@ -40,8 +38,6 @@ public class GameManager : MonoBehaviour
     public void SetPlayerDefaultPosition(Vector2 defaultPosition)
     {
         PlayerMovementController.SetDefaultPosition(defaultPosition);
-
-
     }
 
     public void SetTargetPosition(Vector2[] targetPosition)
@@ -49,14 +45,25 @@ public class GameManager : MonoBehaviour
         TargetPosition = targetPosition.ToList();
     }
 
+    public void SetBoxController(List<BoxController> boxControllers)
+    {
+        BoxControllerList = boxControllers;
+    }
+
     public void CheckWinning()
     {
-        foreach (Vector2 targetPos in TargetPosition)
+        foreach (BoxController boxController in BoxControllerList)
         {
-            Collider2D box = Utility.OverlapPoint(targetPos, "Box");
-            if (box)
+            foreach (Vector2 targetPos in TargetPosition)
             {
-                box.GetComponent<BoxController>().ChangeColor(true);
+                if ((Vector2) boxController.transform.position == targetPos)
+                {
+                    boxController.ChangeColor(true);
+                }
+                else
+                {
+                    boxController.ChangeColor(false);
+                }
             }
         }
     }

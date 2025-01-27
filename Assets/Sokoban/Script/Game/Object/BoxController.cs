@@ -29,6 +29,8 @@ public class BoxController : MonoBehaviour
 
         transform.position = targetPos;
 
+        GameManager.Instance.CheckWinning();
+
         yield return null;
     }
 

@@ -52,14 +52,20 @@ public class MapGenerator : MonoBehaviour
         GenerateFloor(maxX, maxY);
 
         // Generate box
-        GeneratePrefabAtPosition(mapObject.BoxPosition, boxPrefab);
+        GameObject[] boxObjectList = GeneratePrefabAtPosition(mapObject.BoxPosition, boxPrefab);
+
+        List<BoxController> boxControllers = boxObjectList.Select(x => x.GetComponent<BoxController>()).ToList();
+        
+        GameManager.Instance.SetBoxController(boxControllers);
 
         // Generate target box position
         GeneratePrefabAtPosition(mapObject.TargetPosition, targetBoxPrefab);
-        GameManager.Instance.SetTargetPosition(GetVectorArrayFromPoints(mapObject.TargetPosition));
+        GameManager.Instance.SetTargetPosition (GetVectorArrayFromPoints(mapObject.TargetPosition));
 
         // Setplayer position
         GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
+
+        GameManager.Instance.CheckWinning();
     }
 
     private void GenerateFloor(int maxX, int maxY)
@@ -110,12 +116,17 @@ public class MapGenerator : MonoBehaviour
         return wall != null;
     }
 
-    public void GeneratePrefabAtPosition(Position[] position, GameObject prefab)
+    public GameObject[] GeneratePrefabAtPosition(Position[] position, GameObject prefab)
     {
+        List<GameObject> prefabList = new List<GameObject>();
+
         foreach (Position pos in position)
         {
             GameObject curBox = Instantiate(prefab, pos.Vector, Quaternion.identity, enviroment);
+            prefabList.Add(curBox);
         }
+
+        return prefabList.ToArray();
     }
 
     public void GenerateWall(Position[] turnPoint)
