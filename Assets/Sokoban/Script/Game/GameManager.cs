@@ -14,10 +14,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [Header("Controllers")]
     [SerializeField] private PlayerMovementController PlayerMovementController;
+    [SerializeField] private CameraController CameraController;
 
     public List<Vector2> TargetPosition { get; private set; }
     public List<BoxController> BoxControllerList { get; private set; }
+
 
     public const float MOVE_TIME = .5f;
 
@@ -52,13 +55,16 @@ public class GameManager : MonoBehaviour
 
     public void CheckWinning()
     {
+
         foreach (BoxController boxController in BoxControllerList)
         {
             foreach (Vector2 targetPos in TargetPosition)
             {
                 if ((Vector2) boxController.transform.position == targetPos)
                 {
+
                     boxController.ChangeColor(true);
+                    break;
                 }
                 else
                 {
@@ -66,5 +72,10 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetupCamera(int maxX, int maxY)
+    {
+        CameraController.SetCameraPosition(maxX, maxY);
     }
 }

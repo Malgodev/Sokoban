@@ -15,6 +15,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private GameObject boxPrefab;
     [SerializeField] private GameObject targetBoxPrefab;
 
+    private int maxX;
+    private int maxY;
 
     private void Start()
     {
@@ -36,9 +38,6 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap(MapObject mapObject)
     {
-        int maxX = 0;
-        int maxY = 0;
-
         // Generate outer wall
         GenerateWall(GetVectorArrayFromPoints(mapObject.OuterWallTurnPoint).ToList(), out maxX, out maxY);
 
@@ -66,6 +65,7 @@ public class MapGenerator : MonoBehaviour
         GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
 
         GameManager.Instance.CheckWinning();
+        GameManager.Instance.SetupCamera(maxX, maxY);
     }
 
     private void GenerateFloor(int maxX, int maxY)
