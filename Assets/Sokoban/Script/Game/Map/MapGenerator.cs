@@ -110,8 +110,7 @@ public class MapGenerator : MonoBehaviour
 
     private bool HasWall(Vector2 point)
     {
-        // TODO Hard code
-        Collider2D wall = Utility.OverlapPoint(point, "Wall");
+        Collider2D wall = Utility.OverlapPoint(point, ObjectType.Wall.ToString());
 
         return wall != null;
     }

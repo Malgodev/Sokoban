@@ -9,11 +9,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool IsMoving = false;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         float horAxis = Input.GetAxisRaw("Horizontal");
@@ -23,8 +18,6 @@ public class PlayerMovementController : MonoBehaviour
 
         if (targetDirec != Vector3.zero && IsMoveable(targetDirec + transform.position))
         {
-
-
             StartCoroutine(MoveToPosition(transform.position + targetDirec));
         }
     }
@@ -71,14 +64,13 @@ public class PlayerMovementController : MonoBehaviour
             return false;
         }
 
-        // TODO Hard code
-        if (Utility.OverlapPoint(targetPos, "Wall"))
+        if (Utility.OverlapPoint(targetPos, ObjectType.Wall.ToString()))
         {
             return false;
         }
 
         Vector2 targetDirec = targetPos - (Vector2) transform.position;
-        Collider2D boxCollider = Utility.OverlapPoint(targetPos, "Box");
+        Collider2D boxCollider = Utility.OverlapPoint(targetPos, ObjectType.Box.ToString());
 
         if (boxCollider)
         {
