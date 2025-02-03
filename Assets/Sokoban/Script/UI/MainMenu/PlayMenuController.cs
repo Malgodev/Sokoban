@@ -46,8 +46,7 @@ public class PlayMenuController : MonoBehaviour
     {
         GameObject mapButton = Instantiate(mapButtonPrefab, mapHolder);
 
+        // TODO Change author name to other
         mapButton.GetComponent<MapButtonController>().SetMapInfo(mapName, "admin");
-
-        // mapButton.transform.SetParent(mapHolder, true);
     }
 }
