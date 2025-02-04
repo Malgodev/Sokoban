@@ -26,7 +26,6 @@ public class LevelManager : MonoBehaviour
         Debug.Log(mapId + " " + author);
 
         // TODO Hard code
-
         SceneManager.LoadScene("MainGame");
     }
 }
