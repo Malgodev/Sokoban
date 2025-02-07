@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ea24d4d39f5f9b41892a062944ea38e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c52142737cbac62489cf15c20561b43e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -335,6 +335,7 @@ MonoBehaviour:
   normalBox: {fileID: 21300000, guid: bda59c8a8be37b2478c3f0030ae449f3, type: 3}
   tickedBox: {fileID: 21300000, guid: f441e78b502bb1241bf8138d95aeb43d, type: 3}
   rectTransform: {fileID: 0}
+  insideRect: {fileID: 0}
 --- !u!1 &217304504
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 5, y: -40}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &619216030
@@ -586,7 +587,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bda59c8a8be37b2478c3f0030ae449f3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f441e78b502bb1241bf8138d95aeb43d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -620,6 +621,7 @@ MonoBehaviour:
   normalBox: {fileID: 21300000, guid: bda59c8a8be37b2478c3f0030ae449f3, type: 3}
   tickedBox: {fileID: 21300000, guid: f441e78b502bb1241bf8138d95aeb43d, type: 3}
   rectTransform: {fileID: 0}
+  insideRect: {fileID: 0}
 --- !u!1 &646270032
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +760,7 @@ MonoBehaviour:
   normalBox: {fileID: 21300000, guid: bda59c8a8be37b2478c3f0030ae449f3, type: 3}
   tickedBox: {fileID: 21300000, guid: f441e78b502bb1241bf8138d95aeb43d, type: 3}
   rectTransform: {fileID: 0}
+  insideRect: {fileID: 0}
 --- !u!1 &804448281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,6 +1085,7 @@ MonoBehaviour:
   normalBox: {fileID: 21300000, guid: bda59c8a8be37b2478c3f0030ae449f3, type: 3}
   tickedBox: {fileID: 21300000, guid: f441e78b502bb1241bf8138d95aeb43d, type: 3}
   rectTransform: {fileID: 0}
+  insideRect: {fileID: 0}
 --- !u!1 &1253875594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3646,8 +3650,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -2.5, y: -5}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268948267
 MonoBehaviour:
@@ -3722,7 +3726,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292245932
 MonoBehaviour:
@@ -3744,7 +3748,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ea24d4d39f5f9b41892a062944ea38e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 450d5c8787751d945bd9b7eb365e96c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3797,7 +3801,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569372551
 MonoBehaviour:
@@ -3872,7 +3876,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712299467
 MonoBehaviour:
@@ -3894,7 +3898,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ea24d4d39f5f9b41892a062944ea38e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb48959f5a73e6e40a89d0864ee5324c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4162,6 +4166,7 @@ MonoBehaviour:
   normalBox: {fileID: 21300000, guid: bda59c8a8be37b2478c3f0030ae449f3, type: 3}
   tickedBox: {fileID: 21300000, guid: f441e78b502bb1241bf8138d95aeb43d, type: 3}
   rectTransform: {fileID: 0}
+  insideRect: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

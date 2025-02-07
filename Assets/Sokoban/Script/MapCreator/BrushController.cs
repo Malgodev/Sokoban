@@ -14,10 +14,15 @@ public class BrushController : MonoBehaviour
     [SerializeField] private Sprite tickedBox;
 
     [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private RectTransform insideRect;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        foreach (Transform child in this.transform)
+        {
+            insideRect = child.GetComponent<RectTransform>();
+        }
     }
 
     public void ChangeSelectedBox(bool isSelected)
@@ -31,16 +36,12 @@ public class BrushController : MonoBehaviour
     private void SetTransform()
     {
         int deltaPosition = isSelected ? 1 : -1;
-
-        Debug.Log(rectTransform.rect);
-
-        rectTransform.localPosition = rectTransform.localPosition + (new Vector3(5, 10, 0) * deltaPosition);
-
-        Debug.Log(rectTransform.localPosition);
+        rectTransform.anchoredPosition = rectTransform.anchoredPosition + (new Vector2(5, 10) * deltaPosition);
 
         int deltaScale = isSelected ? 160 : 150;
-
         rectTransform.sizeDelta = new Vector2(deltaScale, deltaScale);
+
+        insideRect.anchoredPosition = isSelected ? new Vector2(-2.5f, -5) : new Vector2(0, 0);
     }
 
     private void ChangeSprite()
