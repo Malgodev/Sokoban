@@ -32,11 +32,14 @@ public class ItemPanelController : MonoBehaviour
 
             brushList.Add(child.GetComponent<BrushController>());   
         }
+
+        SelectBrush(curItemType);
     }
 
     private void SelectBrush(EItemType itemType)
     {
-        DeselectBrush();
+        BrushController oldBrush = GetBrush(curItemType);
+        DeselectBrush(oldBrush);
 
         curItemType = itemType;
 
@@ -48,18 +51,13 @@ public class ItemPanelController : MonoBehaviour
 
             return;
         }
-        else
-        {
-            Debug.Log(curBrush.brushType.ToString());
-        }
 
-        switch (itemType)
-        {
-            case EItemType.Wall:
-                break;
+        curBrush.ChangeSelectedBox(true);
+    }
 
-
-        }
+    private void DeselectBrush(BrushController oldBrush)
+    {
+        oldBrush.ChangeSelectedBox(false);
     }
 
     private BrushController GetBrush(EItemType itemType)
@@ -73,15 +71,5 @@ public class ItemPanelController : MonoBehaviour
         }
 
         return null;
-    }
-
-    private void DeselectBrush()
-    {
-
-    }
-
-    private void ChangeBrushBoxUI(GameObject brushBox)
-    {
-
     }
 }

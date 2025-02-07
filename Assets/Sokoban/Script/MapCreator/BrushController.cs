@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class BrushController : MonoBehaviour
 {
@@ -12,22 +13,38 @@ public class BrushController : MonoBehaviour
     [SerializeField] private Sprite normalBox;
     [SerializeField] private Sprite tickedBox;
 
-    private void ChangeSelectedBox(bool isSelected)
+    [SerializeField] private RectTransform rectTransform;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
+
+    public void ChangeSelectedBox(bool isSelected)
     {
         this.isSelected = isSelected;
 
-        SetPosition();
+        SetTransform();
+        ChangeSprite();
     }
 
-    private void SetPosition()
+    private void SetTransform()
     {
-        int delta = isSelected ? 1 : -1;
+        int deltaPosition = isSelected ? 1 : -1;
 
-        this.transform.position = this.transform.position + (new Vector3(5, 5, 0) * delta);
+        Debug.Log(rectTransform.rect);
+
+        rectTransform.localPosition = rectTransform.localPosition + (new Vector3(5, 10, 0) * deltaPosition);
+
+        Debug.Log(rectTransform.localPosition);
+
+        int deltaScale = isSelected ? 160 : 150;
+
+        rectTransform.sizeDelta = new Vector2(deltaScale, deltaScale);
     }
 
     private void ChangeSprite()
     {
-        this.GetComponent<SpriteRenderer>().sprite = isSelected ? tickedBox : normalBox;
+        this.GetComponent<Image>().sprite = isSelected ? tickedBox : normalBox;
     }
 }
