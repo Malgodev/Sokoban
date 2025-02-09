@@ -25,10 +25,15 @@ public class ItemPanelController : MonoBehaviour
         foreach (Transform child in this.transform)
         {
             BrushController tmpBrush = child.GetComponent<BrushController>();
+
+            if (tmpBrush == null)
+            {
+                continue;
+            }
+
             Button button = child.GetComponent<Button>();
 
             button.onClick.AddListener(() => SelectBrush(tmpBrush.brushType));
-
 
             brushList.Add(child.GetComponent<BrushController>());   
         }
