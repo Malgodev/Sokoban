@@ -20,6 +20,8 @@ public class ItemPanelController : MonoBehaviour
 
     [SerializeField] List<BrushController> brushList = new List<BrushController>();
 
+    [SerializeField] Slider brushSlider;
+
     private void Start()
     {
         foreach (Transform child in this.transform)
@@ -39,6 +41,7 @@ public class ItemPanelController : MonoBehaviour
         }
 
         SelectBrush(curItemType);
+
     }
 
     private void SelectBrush(EItemType itemType)
@@ -76,5 +79,10 @@ public class ItemPanelController : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void ChangeBrushType()
+    {
+
     }
 }
