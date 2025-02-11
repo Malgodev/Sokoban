@@ -24,6 +24,7 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
     private Coroutine _animateSliderCoroutine;
 
     [Header("Events")]
+    [SerializeField] public UnityEvent onClick;
     [SerializeField] private UnityEvent onToggleOn;
     [SerializeField] private UnityEvent onToggleOff;
 
@@ -75,6 +76,7 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Toggle();
+        onClick?.Invoke();
     }
 
 

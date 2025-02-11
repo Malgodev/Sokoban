@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
-public class MapObject
+public class MapInfo
 {
     public string MapId;
     public Position[] OuterWallTurnPoint;

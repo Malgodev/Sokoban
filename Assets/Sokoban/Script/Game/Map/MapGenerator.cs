@@ -29,40 +29,40 @@ public class MapGenerator : MonoBehaviour
 
         if (jsonFile != null)
         {
-            MapObject mapObject = JsonUtility.FromJson<MapObject>(jsonFile.text);
+            MapInfo mapInfo = JsonUtility.FromJson<MapInfo>(jsonFile.text);
 
-            GenerateMap(mapObject);
+            GenerateMap(mapInfo);
         }
 
     }
 
-    public void GenerateMap(MapObject mapObject)
+    public void GenerateMap(MapInfo mapInfo)
     {
         // Generate outer wall
-        GenerateWall(GetVectorArrayFromPoints(mapObject.OuterWallTurnPoint).ToList(), out maxX, out maxY);
+        GenerateWall(GetVectorArrayFromPoints(mapInfo.OuterWallTurnPoint).ToList(), out maxX, out maxY);
 
         // Generate inner wall
-        for (int i = 0; i < mapObject.InnerWallTurnPoint.Length; i++)
+        for (int i = 0; i < mapInfo.InnerWallTurnPoint.Length; i++)
         {
-            GenerateWall(mapObject.InnerWallTurnPoint[i].Points);
+            GenerateWall(mapInfo.InnerWallTurnPoint[i].Points);
         }
 
         // Generate floor
         GenerateFloor(maxX, maxY);
 
         // Generate box
-        GameObject[] boxObjectList = GeneratePrefabAtPosition(mapObject.BoxPosition, boxPrefab);
+        GameObject[] boxObjectList = GeneratePrefabAtPosition(mapInfo.BoxPosition, boxPrefab);
 
         List<BoxController> boxControllers = boxObjectList.Select(x => x.GetComponent<BoxController>()).ToList();
         
         GameManager.Instance.SetBoxController(boxControllers);
 
         // Generate target box position
-        GeneratePrefabAtPosition(mapObject.TargetPosition, targetBoxPrefab);
-        GameManager.Instance.SetTargetPosition (GetVectorArrayFromPoints(mapObject.TargetPosition));
+        GeneratePrefabAtPosition(mapInfo.TargetPosition, targetBoxPrefab);
+        GameManager.Instance.SetTargetPosition (GetVectorArrayFromPoints(mapInfo.TargetPosition));
 
         // Setplayer position
-        GameManager.Instance.SetPlayerDefaultPosition(mapObject.PlayerPosition.Vector);
+        GameManager.Instance.SetPlayerDefaultPosition(mapInfo.PlayerPosition.Vector);
 
         GameManager.Instance.CheckWinning();
         GameManager.Instance.SetupCamera(maxX, maxY);

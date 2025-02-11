@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public enum EItemType
@@ -20,7 +22,11 @@ public class ItemPanelController : MonoBehaviour
 
     [SerializeField] List<BrushController> brushList = new List<BrushController>();
 
-    [SerializeField] Slider brushSlider;
+    [SerializeField] ToggleSwitch brushToggle; // true if erase mode, else pen mode
+
+    [Header("Map Creator")]
+    [SerializeField] Transform mapObjectHolder;
+    [SerializeField] GameObject mapObjectPrefab;
 
     private void Start()
     {
@@ -41,9 +47,58 @@ public class ItemPanelController : MonoBehaviour
         }
 
         SelectBrush(curItemType);
-
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (!brushToggle.CurrentValue) // pen mode
+            {
+                WriteAtPosition(Utility.GetWorldPositionAtMouse());
+            }
+            else // erase mode
+            {
+                EraseAtPosition(Utility.GetWorldPositionAtMouse());
+            }
+        }
+    }
+
+    private void WriteAtPosition(Vector2 targetPosition)
+    {
+        targetPosition = new Vector2(
+            Mathf.Floor(targetPosition.x) + 0.5f,
+            Mathf.Floor(targetPosition.y) + 0.5f);
+
+        if (IsWriteable(targetPosition))
+        {
+           Instantiate(mapObjectPrefab, targetPosition, Quaternion.identity, mapObjectHolder);
+        }
+    }
+
+    private bool IsWriteable(Vector2 targetPosition)
+    {
+        // TODO Hardcode
+        // Make a check for layer, if item is (wall, floor => layer 1, else layer 2)
+        Collider2D collider = Utility.OverlapPoint(targetPosition, "MapObject");
+
+        if (collider)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void EraseAtPosition(Vector2 targetPosition)
+    {
+        // TODO Hardcode
+        Collider2D collider = Utility.OverlapPoint(targetPosition, "MapObject");
+        if (collider)
+        {
+            Destroy(collider.gameObject);
+        }
+    }
     private void SelectBrush(EItemType itemType)
     {
         BrushController oldBrush = GetBrush(curItemType);
@@ -79,10 +134,5 @@ public class ItemPanelController : MonoBehaviour
         }
 
         return null;
-    }
-
-    private void ChangeBrushType()
-    {
-
     }
 }

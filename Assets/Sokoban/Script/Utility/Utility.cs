@@ -36,4 +36,10 @@ public class Utility
 
         return result.ToArray();
     }
+
+    public static Vector2 GetWorldPositionAtMouse()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
 }
