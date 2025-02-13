@@ -5299,6 +5299,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e859ff25e19680045a48ea8200eba74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallSprite: {fileID: 21300000, guid: 0ea24d4d39f5f9b41892a062944ea38e, type: 3}
+  floorSprite: {fileID: 21300000, guid: b829af53ae904ab4489ea498c38d3bf7, type: 3}
+  playerSpawnSprite: {fileID: 21300000, guid: 86f7f275815103349bfe397ddfa4068b, type: 3}
+  boxSprite: {fileID: 21300000, guid: 450d5c8787751d945bd9b7eb365e96c6, type: 3}
+  boxTargetSprite: {fileID: 21300000, guid: c52142737cbac62489cf15c20561b43e, type: 3}
 --- !u!4 &2039036630
 Transform:
   m_ObjectHideFlags: 0

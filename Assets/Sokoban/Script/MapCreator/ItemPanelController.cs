@@ -28,6 +28,8 @@ public class ItemPanelController : MonoBehaviour
     [SerializeField] Transform mapObjectHolder;
     [SerializeField] GameObject mapObjectPrefab;
 
+
+
     private void Start()
     {
         foreach (Transform child in this.transform)
@@ -72,7 +74,13 @@ public class ItemPanelController : MonoBehaviour
 
         if (IsWriteable(targetPosition))
         {
-           Instantiate(mapObjectPrefab, targetPosition, Quaternion.identity, mapObjectHolder);
+            GameObject tmpGameObject = Instantiate(mapObjectPrefab, targetPosition, Quaternion.identity, mapObjectHolder);
+
+            int layer;
+            GetObjectInfo(curItemType, out layer);
+
+            MapObjectController mapObjectController = tmpGameObject.GetComponent<MapObjectController>();
+            mapObjectController.SetObjectInfo(curItemType, layer);
         }
     }
 
@@ -88,6 +96,29 @@ public class ItemPanelController : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void GetObjectInfo(EItemType type, out int layer)
+    {
+        layer = 1;
+        switch (type)
+        {
+            case EItemType.Wall:
+                layer = 1;
+                break;
+            case EItemType.Floor:
+                layer = 1;
+                break;
+            case EItemType.PlayerSpawn:
+                layer = 2;
+                break;
+            case EItemType.Box:
+                layer = 3;
+                break;
+            case EItemType.BoxTarget:
+                layer = 2;
+                break;
+        }
     }
 
     private void EraseAtPosition(Vector2 targetPosition)
