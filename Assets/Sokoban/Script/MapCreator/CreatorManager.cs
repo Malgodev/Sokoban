@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CreatorManager : MonoBehaviour
 {
-    [SerializeField] public CreatorManager Instance { get; private set; }
+    [SerializeField] public static CreatorManager Instance { get; private set; }
 
     [Header("Sprite")]
     [SerializeField] private Sprite wallSprite;
@@ -54,11 +54,4 @@ public class CreatorManager : MonoBehaviour
                 return null;
         }
     }
-
-    //Wall,
-    //Floor,
-    //PlayerSpawn,
-    //Box,
-    //BoxTarget,
-    //Eraser,
 }

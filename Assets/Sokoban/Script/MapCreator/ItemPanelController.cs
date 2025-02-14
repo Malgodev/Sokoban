@@ -90,6 +90,19 @@ public class ItemPanelController : MonoBehaviour
         // Make a check for layer, if item is (wall, floor => layer 1, else layer 2)
         Collider2D collider = Utility.OverlapPoint(targetPosition, "MapObject");
 
+        // Check if is in UI
+        float panelWidth = this.GetComponent<RectTransform>().sizeDelta.x;
+        float screenWidth = Screen.width;
+
+        Vector3 mouseViewpot = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+        Debug.Log(mouseViewpot.x + " " + panelWidth / screenWidth);
+
+        if (mouseViewpot.x < (panelWidth / screenWidth))
+        {
+            return false;
+        }
+
         if (collider)
         {
             return false;

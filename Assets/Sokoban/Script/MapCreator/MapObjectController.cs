@@ -19,11 +19,13 @@ public class MapObjectController : MonoBehaviour
         this.type = type;
         this.layer = layer;
 
-
+        ChangeSprite();
     }
 
     public void ChangeSprite()
     {
-        // GetComponent<SpriteRenderer>().sprite = sprite;
+        Sprite sprite = CreatorManager.Instance.GetSpriteByType(type);
+    
+        GetComponent<SpriteRenderer>().sprite = sprite;
     }
 }
