@@ -31,7 +31,7 @@ public class CreatorManager : MonoBehaviour
         
     }
 
-    void CreateGrid()
+    void ConvertToJson()
     {
 
     }

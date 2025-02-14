@@ -72,43 +72,55 @@ public class ItemPanelController : MonoBehaviour
             Mathf.Floor(targetPosition.x) + 0.5f,
             Mathf.Floor(targetPosition.y) + 0.5f);
 
-        if (IsWriteable(targetPosition))
+        int layer;
+        GetObjectInfo(curItemType, out layer);
+
+        if (IsWriteable(targetPosition, layer))
         {
             GameObject tmpGameObject = Instantiate(mapObjectPrefab, targetPosition, Quaternion.identity, mapObjectHolder);
-
-            int layer;
-            GetObjectInfo(curItemType, out layer);
 
             MapObjectController mapObjectController = tmpGameObject.GetComponent<MapObjectController>();
             mapObjectController.SetObjectInfo(curItemType, layer);
         }
     }
 
-    private bool IsWriteable(Vector2 targetPosition)
+    private bool IsWriteable(Vector2 targetPosition, int layer)
     {
-        // TODO Hardcode
-        // Make a check for layer, if item is (wall, floor => layer 1, else layer 2)
-        Collider2D collider = Utility.OverlapPoint(targetPosition, "MapObject");
-
         // Check if is in UI
         float panelWidth = this.GetComponent<RectTransform>().sizeDelta.x;
         float screenWidth = Screen.width;
 
         Vector3 mouseViewpot = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-        Debug.Log(mouseViewpot.x + " " + panelWidth / screenWidth);
-
         if (mouseViewpot.x < (panelWidth / screenWidth))
         {
             return false;
         }
 
-        if (collider)
+        // TODO Hardcode
+        // Make a check for layer, if item is (wall, floor => layer 1, else layer 2)
+        Collider2D collider = Utility.OverlapPoint(targetPosition, "MapObject");
+
+        if (collider == null)
         {
+            return true;
+        }
+
+        MapObjectController objectController = collider.GetComponent<MapObjectController>();
+
+        if (objectController == null)
+        {
+            Debug.LogError("Map object not containing script");
+
             return false;
         }
 
-        return true;
+        if (objectController.layer < layer)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void GetObjectInfo(EItemType type, out int layer)
@@ -117,13 +129,13 @@ public class ItemPanelController : MonoBehaviour
         switch (type)
         {
             case EItemType.Wall:
-                layer = 1;
+                layer = 10;
                 break;
             case EItemType.Floor:
                 layer = 1;
                 break;
             case EItemType.PlayerSpawn:
-                layer = 2;
+                layer = 3;
                 break;
             case EItemType.Box:
                 layer = 3;
