@@ -28,8 +28,6 @@ public class ItemPanelController : MonoBehaviour
     [SerializeField] Transform mapObjectHolder;
     [SerializeField] GameObject mapObjectPrefab;
 
-
-
     private void Start()
     {
         foreach (Transform child in this.transform)
@@ -43,7 +41,9 @@ public class ItemPanelController : MonoBehaviour
 
             Button button = child.GetComponent<Button>();
 
-            button.onClick.AddListener(() => SelectBrush(tmpBrush.brushType));
+            button.onClick.AddListener(() => {
+                SelectBrush(tmpBrush.brushType);
+                });
 
             brushList.Add(child.GetComponent<BrushController>());   
         }
@@ -86,6 +86,8 @@ public class ItemPanelController : MonoBehaviour
 
     private bool IsWriteable(Vector2 targetPosition, int layer)
     {
+        // Check if is in allowed rect (get max location and min location -> check if still in rect)
+
         // Check if is in UI
         float panelWidth = this.GetComponent<RectTransform>().sizeDelta.x;
         float screenWidth = Screen.width;
@@ -155,6 +157,7 @@ public class ItemPanelController : MonoBehaviour
             Destroy(collider.gameObject);
         }
     }
+
     private void SelectBrush(EItemType itemType)
     {
         BrushController oldBrush = GetBrush(curItemType);

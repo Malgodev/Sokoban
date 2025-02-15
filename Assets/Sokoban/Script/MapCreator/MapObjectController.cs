@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MapObjectController : MonoBehaviour
 {
-    public EItemType type { get; private set; }
-    public int layer { get; private set; }
+    [field: SerializeField] public EItemType type { get; private set; }
+    [field: SerializeField] public int layer { get; private set; }
 
     private SpriteRenderer spriteRenderer;
 
@@ -29,10 +29,8 @@ public class MapObjectController : MonoBehaviour
     
         if (sprite == null)
         {
-            Debug.Log("??");
             return;
         }
-
 
         spriteRenderer.sprite = sprite;
     }

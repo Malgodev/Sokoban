@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CreatorManager : MonoBehaviour
 {
@@ -24,16 +25,6 @@ public class CreatorManager : MonoBehaviour
         {
             Instance = this;
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void ConvertToJson()
-    {
-
     }
 
     public Sprite GetSpriteByType(EItemType type)
