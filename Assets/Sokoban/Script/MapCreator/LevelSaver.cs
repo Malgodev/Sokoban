@@ -74,17 +74,25 @@ public class LevelSaver : MonoBehaviour
     {
         for (int i = 0; i < turnPoints.Length; i++)
         {
+            int nextTurn = i + 1;
 
+            if (nextTurn == turnPoints.Length)
+            {
+                nextTurn = 0;
+            }
+
+            bool isHozAxis = turnPoints[i].x == turnPoints[nextTurn].x;
+            float sameAxis = isHozAxis ? turnPoints[i].x : turnPoints[i].y;
+
+
+            if ((isHozAxis && checkPoint.x == sameAxis) 
+                || (!isHozAxis && checkPoint.y == sameAxis))
+            {
+                return true;
+            }
         }
 
-        //foreach (Vector2 turnPoint in turnPoints)
-        //{
-        //    float sameAxis = turnPoint.x == turnPoint.
-
-        //    if (turnPoint.x )
-        //}
-
-        return true;
+        return false;
     }
 
     Transform[] GetNearbyWall(Transform targetWall)
